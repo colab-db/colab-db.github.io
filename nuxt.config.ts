@@ -8,14 +8,15 @@ export default defineNuxtConfig({
 			isCustomElement: (tag) => ['OtherComponents', 'QuillEditor'].includes(tag),
 		}
 	},
+	target: "static",
 	generate:{
-	routes:['notebooks/colabfold']
+		crawler:true,
+		routes:['notebooks/colabfold']
 	},
 	build: {
 		extractCSS: true,
 		transpile: ['@headlessui/vue'],
 	},
-	target: "static",
 	content: {
 		markdown: {
 			toc: {
