@@ -7,6 +7,7 @@
 .rainbow-text {
 	@apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-pink-600;
 }
+
 .rainbow-bg {
 	@apply bg-gradient-to-r from-primary to-pink-600;
 }

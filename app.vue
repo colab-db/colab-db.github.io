@@ -3,3 +3,14 @@
 		<NuxtPage />
 	</div>
 </template>
+
+
+<script setup>
+
+useHead({
+	titleTemplate: (titleChunk) => {
+		return titleChunk ? `${titleChunk} - Colab DB` : 'Colab DB';
+	}
+})
+
+</script>
