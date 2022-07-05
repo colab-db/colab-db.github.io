@@ -8,6 +8,9 @@ export default defineNuxtConfig({
 			isCustomElement: (tag) => ['OtherComponents', 'QuillEditor'].includes(tag),
 		}
 	},
+	generate:{
+	routes:['notebooks/colabfold']
+	},
 	build: {
 		extractCSS: true,
 		transpile: ['@headlessui/vue'],
