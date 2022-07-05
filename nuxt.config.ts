@@ -11,7 +11,7 @@ export default defineNuxtConfig({
 	target: "static",
         generate:{
 	  crawler:true,
-		routes:['/notebooks/colabfold','/notebooks/colabfold_advanced','/notebooks/dmasifcolab', '/notebooks/proteinMPNN', '/notebooks/rdkit-etkdg']
+		routes:['/notebooks/colabfold','/notebooks/colabfold_advanced','/notebooks/dmasifcolab', '/notebooks/proteinmpnn', '/notebooks/rdkit-etkdg']
 	},
 	build: {
 		extractCSS: true,
