@@ -1,0 +1,17 @@
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+src/colabdbmeta/__init__.py
+src/colabdbmeta/fetch_github.py
+src/colabdbmeta/fetch_huggingface.py
+src/colabdbmeta/models.py
+src/colabdbmeta/parse_frontmatter.py
+src/colabdbmeta/process_all.py
+src/colabdbmeta.egg-info/PKG-INFO
+src/colabdbmeta.egg-info/SOURCES.txt
+src/colabdbmeta.egg-info/dependency_links.txt
+src/colabdbmeta.egg-info/entry_points.txt
+src/colabdbmeta.egg-info/not-zip-safe
+src/colabdbmeta.egg-info/requires.txt
+src/colabdbmeta.egg-info/top_level.txt
