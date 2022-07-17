@@ -1,0 +1,2 @@
+[console_scripts]
+colabdbmeta = colabdbmeta.process_all:process_all_cli
