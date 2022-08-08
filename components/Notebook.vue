@@ -143,15 +143,15 @@
                     ">
                                 {{ creator.name }}
                             </span>
-                            <a :href="creator.github" v-if="creator.github != undefined">
+                            <NuxtLink :to="'https://github.com/' + creator.github" v-if="creator.github != undefined">
                                 <Icon icon="ant-design:github-filled" class="text-gray-500 w-5 h-5" />
-                            </a>
-                            <a :href="creator.twitter" v-if="creator.twitter != undefined">
+                            </NuxtLink>
+                            <NuxtLink :to="'https://twitter.com/' + creator.twitter" v-if="creator.twitter != undefined">
                                 <Icon icon="ant-design:twitter" class="text-blue-500 w-5 h-5" />
-                            </a>
-                            <a :href="creator.orcid" v-if="creator.orcid != undefined">
+                            </NuxtLink>
+                            <NuxtLink :to="'https://orcid.org/' + creator.orcid" v-if="creator.orcid != undefined">
                                 <Icon icon="academicons:orcid" class="text-green-500 w-5 h-5" />
-                            </a>
+                            </NuxtLink>
                         </div>
                     </template>
                 </div>
