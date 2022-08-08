@@ -1,1 +1,0 @@
-import{_ as o}from"./plugin-vue_export-helper-84c1d017.mjs";import{o as r,F as n,D as t}from"./entry-dbcda6c7.mjs";const s={};function a(e,c){return r(),n("code",null,[t(e.$slots,"default")])}var _=o(s,[["render",a]]);export{_ as default};
