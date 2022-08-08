@@ -614,15 +614,16 @@ function makePullRequest(notebook) {
     let fileText = `---
 title: "${notebook.title}"
 url: "${notebook.url}"
-creator: ${formattedAuthors}
+git: ${notebook.git}
 description: ${notebook.desc}
-tags: ${formattedTags}
-used_software:${formattedUsedSoftware}
+type: ${formattedType}
 image: ${notebook.image}
 category: ${notebook.category}
 license: ${notebook.license}
-type: ${formattedType}
-git: ${notebook.git}
+tags: ${formattedTags}
+used_software:${formattedUsedSoftware}
+creator: ${formattedAuthors}
+
 ---
 ${notebook.text}`;
 
@@ -631,7 +632,7 @@ ${notebook.text}`;
 
     //Generate a github link with query parameter
     const githubQueryLink =
-        "https://github.com/colab-db/colab-db.github.io/new/main/content/new?value=" +
+        "https://github.com/colab-db/colab-db.github.io/new/main/content/notebooks/new?value=" +
         encodedFileText +
         "&filename=" +
         filename;
