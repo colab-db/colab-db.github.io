@@ -8,13 +8,13 @@
 
     </Head>
 
-    <Nav v-model="searchQuery" />
+    <Nav :showsearch="true" v-model="searchQuery" />
 
-    <main>
-      <section class="lg:px-[15%] px-[5%] pt-20">
+    <main class="container mx-auto lg:px-12 md:px-4">
+      <section class="pt-6 md:pt-20">
         <h1 class="
             lg:text-3xl
-            text-2xl
+            text-lg
             py-2
             leading-normal
             font-semibold
@@ -24,7 +24,7 @@
         </h1>
         <h1 class="
             lg:text-5xl
-            text-5xl text-center
+            text-2xl text-center
             leading-normal
             font-bold
             rainbow-text
@@ -34,18 +34,26 @@
           Biology. Chemistry. Machine Learning.
         </h1>
       </section>
-      <section class="px-[5%] lg:pt-20 pt-14 flex">
-        <div class="w-1/5">
-          <Filter @update:filters="updateFilters" />
+      <section class="px-[0%] lg:pt-20 pt-14 flex">
+        <div class="w-1/5 hidden lg:block">
+          <Filter ref="filtercomponent" @update:filters="updateFilters" />
         </div>
-        <div class="w-4/5 ">
-          <FilterBar :len-notebooks="filteredNotebooks.length" :q="searchQuery"></FilterBar>
-          <div class="grid grid-cols-1 grid-flow-row lg:grid-cols-3 gap-3">
+        <div class="w-full lg:w-4/5 ">
+          <FilterBar @update:sort="updateSort" @update:showmobilefilters="showMenu"
+            :len-notebooks="filteredNotebooks.length" :q="searchQuery"></FilterBar>
+          <div class="grid grid-cols-1 grid-flow-row lg:grid-cols-3 lg:gap-3 px-3 md:px-0">
 
+            <div v-if="filteredNotebooks.length == 0" class="flex items-center flex-col bg-gray-100 py-4">
+              <Icon icon="iconoir:file-not-found" class="text-gray-500 w-12 h-12" />
+              <div class="text-xl font-bold pt-4">Sorry</div>
+              <div class="text-center font-medium pb-6">
+                No notebooks found
+              </div>
 
+            </div>
             <template v-for="(b, i) in filteredNotebooks" :key="i">
               <div class="pb-12 rounded-lg border-2 h-auto relative">
-                <NuxtLink :to="`${b._path}`" class="p-4">
+                <NuxtLink :to="b._path" class="p-4">
                   <img class="
                     lg:h-48
                     md:h-36
@@ -88,7 +96,7 @@
                       <div class="flex items-center text-xs space-x-2">
 
                         <Icon icon="ant-design:star" class="text-gray-500 w-5 h-5" />
-                        <span>10</span>
+                        <span>{{ b.stars }}</span>
                       </div>
                     </div>
                   </div>
@@ -110,13 +118,15 @@
     import Fuse from 'fuse.js/dist/fuse.basic.esm'
     
     const fuseOptions = {
-      threshold: 0.1,
+      threshold: 0.5,
+      ignoreLocation: true,
       keys: [
         'title',
         'category',
         'creator.name',
         'creator.github',
-        'desc',
+        'description',
+        'type',
         'git',
         'tags',
         'used_software',
@@ -127,7 +137,8 @@
     const filters = reactive({
       category: [],
       software: [],
-      type: ''
+      type: '',
+      sort: "Newest"
     })
     const { data: notebooks } = await useAsyncData("colabs", () =>
       queryContent("notebooks").find()
@@ -135,13 +146,22 @@
     
     const fuse = computed(() => {
       //const fuseIndex = Fuse.createIndex(fuseOptions.keys, notebooks)
+    
       return new Fuse(toRaw(notebooks.value), fuseOptions) //, fuseIndex)
     })
+    
     
     function updateFilters(f) {
       filters.category = f.category;
       filters.software = f.software;
       filters.type = f.type;
+    }
+    function updateSort(f) {
+      filters.sort = f;
+    }
+    const filtercomponent = ref();
+    function showMenu() {
+      filtercomponent.value.showMenu()
     }
     const filteredNotebooks = computed(() => {
       if (notebooks.value.length == 0) {
@@ -158,6 +178,18 @@
       //   // Sort only if no search
       //   modules.sort((a, b) => sort(a[orderBy.value], b[orderBy.value], sortBy.value === 'asc'))
       // }
+      nbs.sort(function (a, b) {
+        if (filters.sort === "Most stars") {
+          return b.stars - a.stars
+        } else if (filters.sort === "Most comments") {
+          return b.lenComments - a.lenComments
+        } else if (filters.sort === "Newest") {
+          return b.created - a.created
+        } else {
+          return 0
+        }
+    
+      })
       if (filters.type != "") {
         nbs = nbs.filter(nb => nb.type == filters.type)
       }

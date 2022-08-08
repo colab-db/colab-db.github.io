@@ -17,14 +17,25 @@ used_software:
  - alphafold
 creator:
  - 
-  name: Sergei Ovichnikov
-  orcid: XXXXX
+  name: Sergey Ovichnikov
   twitter: sokrypton
   github: sokrypton
  - 
   name: Milot Mirdita
+  twitter: milot_mirdita
+  github: milot-mirdita
+ - 
+  name: Konstantin Schütze
+ - 
+  name: Yoshitaka Moriwaki
+ - 
+  name: Lim Heo
+ - 
+  name: Martin Steinegger
 ---
 
-# ColabFold - AlphaFold
+# ColabFold - Advanced
 
-Runs AlphaFold using MMseqs2
+This notebook modifies deepmind's original notebook (before AlphaFold-Multimer existed) to add experimental support for modeling complexes (both homo and hetero-oligomers), option to run MMseqs2 instead of Jackhmmer for MSA generation and advanced functionality.
+
+Mirdita M, Schütze K, Moriwaki Y, Heo L, Ovchinnikov S, Steinegger M. ColabFold: Making protein folding accessible to all. Nature Methods, 2022

@@ -2,7 +2,7 @@
 title: 'Piperazine Ring Conformation using RDKit'
 description: 'RDKIT ETKDG built conformations'
 git: sunwhan/blog
-urls:
+url:
   - https://hub.gke2.mybinder.org/user/sunhwan-blog-om5b2sa9/notebooks/_notebooks/2021-02-24-RDKit-ETKDG-Piperazine.ipynb
   - https://colab.research.google.com/github/sunhwan/blog/blob/master/_notebooks/2021-02-24-RDKit-ETKDG-Piperazine.ipynb
 type: 
