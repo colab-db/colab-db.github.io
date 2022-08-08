@@ -17,15 +17,26 @@ used_software:
  - alphafold
 creator:
  - 
-  name: Sergey Ovchinnikov
+  name: Sergey Ovichnikov
   twitter: sokrypton
   github: sokrypton
  - 
   name: Milot Mirdita
   twitter: milot_mirdita
   github: milot-mirdita
+ - 
+  name: Konstantin Schütze
+ - 
+  name: Yoshitaka Moriwaki
+ - 
+  name: Lim Heo
+ - 
+  name: Martin Steinegger
 ---
 
-# ColabFold - AlphaFold
 
-Runs AlphaFold using MMseqs2
+# ColabFold: AlphaFold2 using MMseqs2
+
+Easy to use protein structure and complex prediction using AlphaFold2 and Alphafold2-multimer. Sequence alignments/templates are generated through MMseqs2 and HHsearch. For more details, see bottom of the notebook, checkout the ColabFold GitHub and read our manuscript. 
+
+Mirdita M, Schütze K, Moriwaki Y, Heo L, Ovchinnikov S, Steinegger M. ColabFold: Making protein folding accessible to all. Nature Methods, 2022
