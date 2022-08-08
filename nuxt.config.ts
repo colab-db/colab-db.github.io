@@ -14,11 +14,6 @@ export default defineNuxtConfig({
 		crawler: true,
 		routes: data['routes']
 	},
-	target: "static",
-        generate:{
-	  crawler:true,
-		routes:['/notebooks/colabfold','/notebooks/colabfold_advanced','/notebooks/dmasifcolab', '/notebooks/proteinmpnn', '/notebooks/rdkit-etkdg']
-	},
 	build: {
 		extractCSS: true,
 		transpile: ['@headlessui/vue'],
