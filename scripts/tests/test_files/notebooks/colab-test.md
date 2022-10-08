@@ -1,7 +1,7 @@
 ---
 title: 'dMasif colab'
 description: 'Predict interaction sites using fingerprints'
-git: LPDI-epfl/masif
+git: casperg92/MaSIF_colab
 url: https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb
 type: colab
 category: biology
