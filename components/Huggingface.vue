@@ -95,7 +95,6 @@
         </div>
 
         <div class="w-2/3 border-2 rounded-xl">
-            <!-- <h2 class="font-bold text-4xl  pt-3 px-20">Live notebook</h2> -->
             <iframe :src="'https://hf.space/embed/' + props.post.spacename + '/'" frameBorder="0" title="Gradio app"
                 class="container p-0 h-screen flex-grow space-iframe" allow="accelerometer; ambient-light-sensor; autoplay; battery; camera; document-domain; encrypted-media;
             fullscreen; geolocation; gyroscope; layout-animations; legacy-image-formats; magnetometer; microphone; midi;

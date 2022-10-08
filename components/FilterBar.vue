@@ -45,30 +45,26 @@
                     rounded-md
                     shadow-2xl
                     bg-white
+                    z-50
                     ring-1 ring-black ring-opacity-5
                     focus:outline-none
                   ">
                         <div class="py-1">
-                            <MenuItem v-for="option in sortOptions" :key="option.name" v-slot="{ active }">
-                            <a :href="option.href" :class="[
-                                option.current
+                            <MenuItem v-for="option, key in sortOptions" :key="key" v-slot="{ active }">
+                            <button @click="updateOption(key)" :class="[
+                                selectedOption == key
                                     ? 'font-medium text-gray-900'
                                     : 'text-gray-500',
                                 active ? 'bg-gray-100' : '',
                                 'block px-4 py-2 text-sm',
                             ]">
-                                {{ option.name }}
-                            </a>
+                                {{ key }}
+                            </button>
                             </MenuItem>
                         </div>
                     </MenuItems>
                 </transition>
             </Menu>
-
-            <!-- <button type="button" class="p-2 -m-2 ml-5 sm:ml-7 text-gray-400 hover:text-gray-500">
-                <span class="sr-only">View grid</span>
-                <ViewGridIcon class="w-5 h-5" aria-hidden="true" />
-            </button> -->
             <button type="button" class="
                 p-2
                 -m-2
@@ -77,7 +73,7 @@
                 text-gray-400
                 hover:text-gray-500
                 lg:hidden
-              " @click="mobileFiltersOpen = true">
+              " @click="emit('update:showmobilefilters')">
                 <span class="sr-only">Filters</span>
                 <FilterIcon class="w-5 h-5" aria-hidden="true" />
             </button>
@@ -88,7 +84,10 @@
 <script setup>
 
 
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
+
+const emit = defineEmits(['update:sort', 'update:showmobilefilters']);
+
 import {
     Dialog,
     DialogPanel,
@@ -114,13 +113,17 @@ import {
 
 const props = defineProps(['lenNotebooks', 'q'])
 
-const mobileFiltersOpen = ref(false);
+const selectedOption = ref('Newest');
+const sortOptions = {
+    "Most Stars": true,
+    "Newest": false,
+    "Most comments": false,
+};
 
-const sortOptions = [
-    { name: "Most Stars", href: "#", current: true },
-    { name: "Newest", href: "#", current: false },
-    { name: "Most comments", href: "#", current: false },
-];
+function updateOption(key) {
+    selectedOption.value = key
+    emit('update:sort', selectedOption)
+}
 
 
 </script>

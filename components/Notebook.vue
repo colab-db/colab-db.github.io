@@ -4,6 +4,8 @@
           pt-10
           relative
           flex
+          flex-wrap 
+          lg:flex-nowrap
           items-start
           lg:space-x-10
           px-[5%]
@@ -29,8 +31,9 @@
             <Comments />
         </div>
 
-        <div class="w-2/3">
-            <NuxtLink :to="props.post.url" class="
+        <div class="w-full lg:w-2/3">
+            <div v-if="typeof (props.post.url) == 'string'">
+                <NuxtLink :to="props.post.url" class="
                       relative
                       inline-flex
                       items-center
@@ -53,7 +56,7 @@
                       dark:focus:ring-purple-800
                       my-3
                     ">
-                <span class="
+                    <span class="
                         relative
                         px-5
                         py-2.5
@@ -66,9 +69,60 @@
                         dark:bg-gray-900
                         rounded-md
                       ">
-                    Launch
-                </span>
-            </NuxtLink>
+                        Launch
+                    </span>
+                </NuxtLink>
+            </div>
+
+            <div class="flex justify-end space-x-2" v-else>
+                <div v-for="url in props.post.url" class="flex">
+                    <NuxtLink :to="url" class="
+                      relative
+                      inline-flex
+                      items-center
+                      justify-center
+                      p-0.5
+                      overflow-hidden
+                      text-base
+                      font-medium
+                      text-gray-900
+                      rounded-lg
+                      group
+                      bg-gradient-to-br
+                      from-purple-500
+                      to-pink-500
+                      hover:from-purple-600 hover:to-pink-600
+                      hover:text-white
+                      dark:text-white
+                      focus:ring-4 focus:outline-none focus:ring-purple-200
+                      dark:focus:ring-purple-800
+                      my-1
+                    ">
+                        <span class="
+                        relative
+                        px-4
+                        py-2.5
+                        bg-white
+                        transition-all
+                        text-center
+                        ease-in
+                        duration-75
+                        w-full
+                        text-gray-800
+                        dark:bg-gray-900
+                        rounded-md
+                        flex
+                        items-center space-x-2
+                        hover:bg-opacity-25
+                        hover:text-white
+                      ">
+                            <span>Launch </span>
+                            <img src="/binder.svg" v-if="getBaseurl(url) == 'binder'" alt="Binder" class="h-8 w-8" />
+                            <img src="/colab.svg" v-if="getBaseurl(url) == 'colab'" alt="Colab" class="h-8 w-8" />
+                        </span>
+                    </NuxtLink>
+                </div>
+            </div>
 
             <img v-if="props.post.image != undefined" :src="props.post.image" :alt="props.post.title"
                 class="max-h-48 mx-auto" />
@@ -79,23 +133,25 @@
                     </github-button> -->
 
             <div class="w-full px-4 py-4 rounded-lg border-2">
+                <h2 class="text-xl mb-2">{{ props.post.title }}</h2>
                 <h4 class="text-lg font-semibold">Creators</h4>
                 <div class="flex flex-col space-y-2">
                     <template v-for="(creator, k) in props.post.creator" :key="`creator-${k}`">
                         <div class="flex space-x-2 items-center">
-                            <a class="
+                            <span class="
                       text-base text-gray-600
-                      hover:text-primary-900
-                      underline underline-offset-4
-                      decoration-wavy decoration-primary/40
-                      hover:decoration-primary
-                      transition-all
                     ">
                                 {{ creator.name }}
-                            </a>
-                            <Icon icon="ant-design:github-filled" class="text-gray-500 w-5 h-5" />
-                            <Icon icon="ant-design:twitter" class="text-blue-500 w-5 h-5" />
-                            <Icon icon="academicons:orcid" class="text-green-500 w-5 h-5" />
+                            </span>
+                            <NuxtLink :to="'https://github.com/' + creator.github" v-if="creator.github != undefined">
+                                <Icon icon="ant-design:github-filled" class="text-gray-500 w-5 h-5" />
+                            </NuxtLink>
+                            <NuxtLink :to="'https://twitter.com/' + creator.twitter" v-if="creator.twitter != undefined">
+                                <Icon icon="ant-design:twitter" class="text-blue-500 w-5 h-5" />
+                            </NuxtLink>
+                            <NuxtLink :to="'https://orcid.org/' + creator.orcid" v-if="creator.orcid != undefined">
+                                <Icon icon="academicons:orcid" class="text-green-500 w-5 h-5" />
+                            </NuxtLink>
                         </div>
                     </template>
                 </div>
@@ -134,6 +190,11 @@
                             {{ software }}</span>
                     </template>
                 </div>
+
+                <h4 class="text-lg font-semibold mt-3">License</h4>
+                <div class="flex items-center space-x-2" v-if="props.post.license != undefined">{{ props.post.license }}
+                </div>
+                <div v-else>Not specified</div>
             </div>
         </div>
     </article>
@@ -143,4 +204,17 @@
 import { Icon } from "@iconify/vue";
 import GithubButton from "vue-github-button";
 const props = defineProps(['post'])
+
+function getBaseurl(url) {
+    let u = new URL(url);
+    // check if u contains colab
+    if (u.hostname.includes('colab')) {
+        return "colab";
+    } else if (u.hostname.includes('binder')) {
+        return "binder";
+    } else {
+        return u.hostname;
+    }
+
+}
 </script>

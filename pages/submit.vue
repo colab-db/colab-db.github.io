@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen">
-        <Nav />
+        <Nav :showsearch="false" />
         <main class="prose container mx-auto">
             <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div class="max-w-5xl w-full space-y-8">
@@ -35,7 +35,7 @@
                             <label for="git" class="sr-only">Identifier (e.g username/reponame)</label>
                             <input id="git" name="git" type="text" v-model="notebook.git" required=""
                                 class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
-                                placeholder="git" />
+                                placeholder="username/reponame" />
                         </div>
                         <div class="my-3">
                             <label for="image" class="sr-only">Logo</label>
@@ -243,25 +243,25 @@ import Multiselect from "@vueform/multiselect";
 import { ref, reactive } from "vue";
 
 const notebook = reactive({
-    title: "Title",
-    desc: "desc",
+    title: "",
+    desc: "",
     authors: [
         {
-            name: "auth1",
-            twitter: "twit",
-            github: "github",
-            orcid: "orcid",
+            name: "",
+            twitter: "",
+            github: "",
+            orcid: "",
         },
     ],
-    license: "mit",
-    url: "https://",
-    git: "git",
-    image: "img",
-    type: ["colab"],
-    nbtags: ["proteindesign"],
-    category: "biology",
-    software: ["py3dmol", "keras"],
-    text: "long desc",
+    license: "",
+    url: "",
+    git: "",
+    image: "",
+    type: [],
+    nbtags: [],
+    category: "",
+    software: [],
+    text: "",
 });
 
 function insertAuthor() {
@@ -614,15 +614,16 @@ function makePullRequest(notebook) {
     let fileText = `---
 title: "${notebook.title}"
 url: "${notebook.url}"
-creator: ${formattedAuthors}
+git: ${notebook.git}
 description: ${notebook.desc}
-tags: ${formattedTags}
-used_software:${formattedUsedSoftware}
+type: ${formattedType}
 image: ${notebook.image}
 category: ${notebook.category}
 license: ${notebook.license}
-type: ${formattedType}
-git: ${notebook.git}
+tags: ${formattedTags}
+used_software:${formattedUsedSoftware}
+creator: ${formattedAuthors}
+
 ---
 ${notebook.text}`;
 
@@ -631,7 +632,7 @@ ${notebook.text}`;
 
     //Generate a github link with query parameter
     const githubQueryLink =
-        "https://github.com/colab-db/colab-db.github.io/new/main/content/new?value=" +
+        "https://github.com/colab-db/colab-db.github.io/new/main/content/notebooks/new?value=" +
         encodedFileText +
         "&filename=" +
         filename;
