@@ -2,17 +2,16 @@
 import os
 
 from github import Github
-
+from loguru import logger
 gh = Github(os.environ.get("GITHUB_TOKEN"))
 
 
 def get_stars(repo: str):
     try:
         repo = gh.get_repo(repo)
-        print(repo)
         return repo.stargazers_count
     except Exception as e:
-        print(e)
+        logger.exception(e)
         return None
 
 
