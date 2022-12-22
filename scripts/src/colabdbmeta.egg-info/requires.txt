@@ -2,6 +2,7 @@ pygithub
 python-frontmatter
 pydantic
 click
+loguru
 
 [lint]
 isort

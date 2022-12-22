@@ -2,6 +2,7 @@ README.md
 pyproject.toml
 setup.cfg
 setup.py
+tox.ini
 src/colabdbmeta/__init__.py
 src/colabdbmeta/fetch_github.py
 src/colabdbmeta/fetch_huggingface.py
@@ -15,3 +16,13 @@ src/colabdbmeta.egg-info/entry_points.txt
 src/colabdbmeta.egg-info/not-zip-safe
 src/colabdbmeta.egg-info/requires.txt
 src/colabdbmeta.egg-info/top_level.txt
+tests/conftest.py
+tests/test_fetch_github.py
+tests/test_fetch_huggingface.py
+tests/test_parse_frontmatter.py
+tests/test_process_all.py
+tests/test_files/notebooks/colabfold.md
+tests/test_files/notebooks/colabfold_advanced.md
+tests/test_files/notebooks/dmasifcolab.md
+tests/test_files/notebooks/proteinmpnn.md
+tests/test_files/notebooks/rdkit-etkdg.md
