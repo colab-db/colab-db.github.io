@@ -1,0 +1,16 @@
+pygithub
+python-frontmatter
+pydantic
+click
+
+[lint]
+isort
+black
+flake8
+pre-commit
+bumpversion
+
+[tests]
+pytest
+tox
+coverage

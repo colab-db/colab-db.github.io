@@ -1,0 +1,33 @@
+Metadata-Version: 2.1
+Name: colabdbmeta
+Version: 0.0.1.dev0
+Home-page: https://github.com/colab-db/colab-db.github.io
+Download-URL: https://github.com/colab-db/colab-db.github.io/releases
+Author: Simon Dürr, Kevin Jablonka
+Author-email: 
+Maintainer: Simon Dürr, Kevin Jablonka
+Maintainer-email: 
+License: MIT
+Project-URL: Bug Tracker, https://github.com/colab-db/colab-db.github.io/issues
+Project-URL: Source Code, https://github.com/colab-db/colab-db.github.io
+Classifier: Development Status :: 1 - Planning
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Framework :: Pytest
+Classifier: Framework :: tox
+Classifier: Framework :: Sphinx
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3 :: Only
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Provides-Extra: lint
+Provides-Extra: tests
+
+# Update colabdb metadata 
+
+After installing the colabdbmeta package (`pip install -e .`) you can run the 
