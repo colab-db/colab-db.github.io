@@ -2,6 +2,8 @@
 """
 import json 
 import glob
+import sys
+
 import frontmatter
 
 files = glob.glob("content/notebooks/*.md")
@@ -11,3 +13,4 @@ for f in files:
         metadata, content = frontmatter.parse(f)
     except:
         print(f"{f} could not be processed, please fix frontmatter")
+        sys.exit(1)
