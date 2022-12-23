@@ -4,13 +4,13 @@ import json
 import glob
 import sys
 
-import frontmatter
+from frontmatter import Frontmatter
 
 files = glob.glob("content/notebooks/*.md")
 
 for f in files:
     try:
-        metadata, content = frontmatter.parse(f)
+        post = Frontmatter.read_file(f)
     except:
         print(f"{f} could not be processed, please fix frontmatter")
         sys.exit(1)
