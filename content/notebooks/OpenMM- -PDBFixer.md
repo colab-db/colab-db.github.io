@@ -13,11 +13,11 @@ tags:
 used_software:
  - openmm
 creator: 
- - 
- name: John Chodera
- twitter: jchodera
- github: jchodera
- orcid: 
+ -
+  name: John Chodera
+  twitter: jchodera
+  github: jchodera
+  orcid: 
 
 ---
 Part of the [OpenMM cookbook](https://openmm.github.io/openmm-cookbook/dev/index.html)
