@@ -20,8 +20,3 @@ with gha_utils.group("My Group"):
                 "fix frontmatter", title="Error processing Markdown", file=f,
                 col=1, end_column=2, line=1, end_line=2,
             )
-
-gha_utils.error(
-                "test error", title="Error processing Markdown", file=f,
-                col=1, end_column=2, line=1, end_line=2,
-            )
