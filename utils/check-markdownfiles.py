@@ -12,5 +12,5 @@ for f in files:
     try:
         post = Frontmatter.read_file(f)
     except:
-        print(f"{f} could not be processed, please fix frontmatter")
+        print(f"::error file={f} line=1::frontmatter could not be processed, please fix it")
         sys.exit(1)
