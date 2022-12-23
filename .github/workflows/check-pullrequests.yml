@@ -25,3 +25,7 @@ jobs:
       - name: run checks
         run: |
           python utils/check-markdownfiles.py
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          filePath: linting.log

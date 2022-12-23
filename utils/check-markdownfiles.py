@@ -3,13 +3,20 @@
 import json 
 import glob
 import sys
-
+import os
 from frontmatter import Frontmatter
 import github_action_utils as gha_utils
 
 files = glob.glob("content/notebooks/*.md")
 
 gha_utils.debug(f"files {files}")
+
+
+
+
+
+
+output = ""
 
 with gha_utils.group("Running frontmatter checks"):
     for f in files:
@@ -18,6 +25,9 @@ with gha_utils.group("Running frontmatter checks"):
             gha_utils.notice(f"{f} passed checks")
         except:
             gha_utils.error(
-                "fix frontmatter", title="Error processing Markdown", file=f,
-                col=1, end_column=2, line=1, end_line=2,
+                "fix frontmatter", title=f"Error processing {f]"
             )
+            output+=f"Error processing {f]\n"
+
+with open("linting.log", "a") as myfile:
+    myfile.write(output)
