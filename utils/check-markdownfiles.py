@@ -7,14 +7,15 @@ import sys
 from frontmatter import Frontmatter
 import github_action_utils as gha_utils
 
-files = glob.glob("../content/notebooks/*.md")
+files = glob.glob("content/notebooks/*.md")
 
-gha_utils.debug(f"{files}")
+gha_utils.debug(f"files {files}")
 
-with gha_utils.group("My Group"):
+with gha_utils.group("Running frontmatter checks"):
     for f in files:
         try:
             post = Frontmatter.read_file(f)
+            gha_utils.notice(f"{f} passed checks")
         except:
             gha_utils.error(
                 "fix frontmatter", title="Error processing Markdown", file=f,
