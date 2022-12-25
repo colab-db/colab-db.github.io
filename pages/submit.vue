@@ -38,6 +38,18 @@
                                 placeholder="username/reponame" />
                         </div>
                         <div class="my-3">
+                            <label for="doi" class="sr-only">DOI</label>
+                            <input id="doi" name="doi" type="text" v-model="doi" required=""
+                                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                                placeholder="Digital Object Identifier (DOI) of preprint/publication" />
+                            <div class="text-red-600 text-sm items-center flex space-x-2" v-if="checkedDoi==null">
+                                <Icon class="w-4 h-4" icon="heroicons:exclamation-triangle" />
+                                <span>DOI not valid</span>
+                            </div>
+                            <p class="text-sm text-gray-500 ">Providing DOI will prepopulate authors. Use
+                                https://doi.org/10.XX or 10.XX format.</p>
+                        </div>
+                        <div class="my-3">
                             <label for="image" class="sr-only">Logo</label>
                             <input id="image" name="image" type="text" v-model="notebook.image" required=""
                                 class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
@@ -240,8 +252,10 @@ import { UserAddIcon } from "@heroicons/vue/outline";
 import { Icon } from "@iconify/vue";
 import Multiselect from "@vueform/multiselect";
 
-import { ref, reactive } from "vue";
+import { ref, reactive, watch } from "vue";
 
+const doi = ref("");
+let checkedDoi = ref("")
 const notebook = reactive({
     title: "",
     desc: "",
@@ -554,6 +568,71 @@ const multiselectStyleImages = {
     spacer: "h-9 py-px box-content",
 };
 
+async function getDataCite(doi) {
+    let options = { method: 'GET', headers: { accept: 'application/vnd.api+json' } };
+    return fetch(doi, options)
+        .then(response => response.json())
+        .then(response => { return response })
+        .catch(err => console.error(err));
+}
+
+async function getCrossRef(doi) {
+    let options = { method: 'GET', };
+    return fetch(doi, options)
+        .then(response => response.json())
+        .then(response => { return response })
+        .catch(err => console.error(err));
+}
+
+async function retrieveInfoFromMeta(doi) {
+    let datacite = ["zenodo", "arXiv"]
+
+    let isDataCite = datacite.some(el => doi.includes(el))
+
+
+    var doiMetadata;
+    let authors = []
+    if (isDataCite) {
+        let doistr = "https://api.datacite.org/dois/" + doi
+        doiMetadata = await getDataCite(doistr)
+        authors = doiMetadata.data.attributes.creators.map(function (el) {
+            return { 'name': el.name }
+        }
+        )
+    }
+    else {
+        let doistr = "https://api.crossref.org/works/" + doi + "/?mailto=dev@simonduerr.eu"
+        doiMetadata = await getCrossRef(doistr)
+        authors = doiMetadata.message.author.map(function (el) {
+            return { 'name': el.given + " " + el.family, 'orcid': el.ORCID.replace("http://orcid.org/", "") }
+        }
+        )
+    }
+    return authors
+}
+
+function checkDOI(testKey) {
+    var DOIpattern = new RegExp(/(10\.[0-9a-zA-Z]+\/(?:(?!["&\'])\S)+)\b/g);
+    let results = DOIpattern.exec(testKey)
+    if (results != null) {
+        return results[0]
+    } else {
+        return null
+    }
+}
+
+watch(doi, async (newDOI, oldDoi) => {
+    if (newDOI != oldDoi) {
+        checkedDoi = checkDOI(newDOI)
+        console.log(checkedDoi)
+        if (checkedDoi != null) {
+            let authors = await retrieveInfoFromMeta(checkedDoi)
+            notebook.authors = authors
+        }
+    }
+})
+
+
 function makePullRequest(notebook) {
     const filename = notebook.title.replace(/\s/g, "-") + ".md";
 
@@ -641,3 +720,6 @@ ${notebook.text}`;
 }
 </script>
 
+<style>
+@import '../node_modules/@vueform/multiselect/themes/tailwind.css'
+</style>

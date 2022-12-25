@@ -4,20 +4,21 @@ url: "https://colab.research.google.com/github/KULL-Centre/papers/blob/main/2022
 git: KULL-center/papers
 description: Pipeline version for predicting protein variants thermodynamic stability changes ( ΔΔG ) using a deep learning representation.
 type: 
-
+ - colab
 image: 
 category: biology
 license: mit
 tags: 
-
+ - thermostability
+ - proteins
 used_software:
-
+ - pytorch
 creator: 
- - 
- name: Matteo Cagiada
- twitter: CagiadaMatteo
- github: 
- orcid: 
+ -
+  name: Matteo Cagiada
+  twitter: CagiadaMatteo
+  github: 
+  orcid: 
 
 ---
 Preprint pipeline version for predicting protein variants **thermodynamic stability changes** ($\Delta \Delta G$) using a deep learning representation. The program, using as input a protein structure (uploaded as PDB) returns stability predictions ($\Delta \Delta G$ in kcal/mol) for each variant at each position of the query protein.
