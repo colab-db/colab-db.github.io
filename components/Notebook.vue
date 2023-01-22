@@ -146,7 +146,8 @@
                             <NuxtLink :to="'https://github.com/' + creator.github" v-if="creator.github != undefined">
                                 <Icon icon="ant-design:github-filled" class="text-gray-500 w-5 h-5" />
                             </NuxtLink>
-                            <NuxtLink :to="'https://twitter.com/' + creator.twitter" v-if="creator.twitter != undefined">
+                            <NuxtLink :to="'https://twitter.com/' + creator.twitter"
+                                v-if="creator.twitter != undefined">
                                 <Icon icon="ant-design:twitter" class="text-blue-500 w-5 h-5" />
                             </NuxtLink>
                             <NuxtLink :to="'https://orcid.org/' + creator.orcid" v-if="creator.orcid != undefined">
@@ -193,6 +194,19 @@
 
                 <h4 class="text-lg font-semibold mt-3">License</h4>
                 <div class="flex items-center space-x-2" v-if="props.post.license != undefined">{{ props.post.license }}
+                </div>
+                <div v-else>Not specified</div>
+
+                <h4 class="text-lg font-semibold mt-3">Code repository</h4>
+
+                <div class="flex items-center space-x-2" v-if="props.post.git != undefined">
+
+                    <NuxtLink :to="'https://github.com/' + props.post.git" class="p-0.5 flex items-center space-x-2">
+                        <Icon icon="ant-design:github-filled" class="text-gray-500 w-7 h-7" />
+                        <span class="text-sm">{{ props.post.git }}</span>
+                    </NuxtLink>
+
+
                 </div>
                 <div v-else>Not specified</div>
             </div>

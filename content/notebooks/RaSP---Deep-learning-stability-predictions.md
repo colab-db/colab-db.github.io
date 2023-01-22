@@ -1,7 +1,7 @@
 ---
 title: "RaSP - Deep learning stability predictions"
 url: "https://colab.research.google.com/github/KULL-Centre/papers/blob/main/2022/ML-ddG-Blaabjerg-et-al/RaSPLab.ipynb"
-git: KULL-center/papers
+git: KULL-Centre/papers
 description: Pipeline version for predicting protein variants thermodynamic stability changes ( ΔΔG ) using a deep learning representation.
 type: 
  - colab

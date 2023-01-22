@@ -19,7 +19,6 @@
 const slug = useRoute().params.slug.toString().replace(/,/g, "/");
 const nbtypes = ["binder", "colab", "jupyter"]
 const { data: post } = await useAsyncData(slug, () => {
-    console.log(slug);
     return queryContent("/notebooks/" + slug).findOne();
 });
 

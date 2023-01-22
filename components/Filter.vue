@@ -128,7 +128,7 @@
         </Dialog>
       </TransitionRoot>
 
-      <main class="mx-auto px-4 sm:px-6 lg:px-8">
+      <main class="mx-auto px-4 sm:px-6 lg:px-6">
         <div class="
             relative
             z-10
@@ -161,15 +161,15 @@
                   border-b border-gray-200
                 ">
                 <li v-for="(category, key) in subCategories" :key="key" class="flex items-center">
-                  <div @click="selectedType = key" class=""
+                  <button @click="selectedType = key" class=""
                     :class="selectedType == key ? 'text-indigo-500' : 'cursor-pointer'">
-                    {{ category.name }}
-                  </div>
+                    {{ category.name }} <span class="bg-gray-200 p-1 rounded-full mx-1">{{ category.count }}</span>
+                  </button>
                   <div class="flex" v-if="selectedType == key">
-                    <span @click="selectedType = ''"
+                    <button @click="selectedType = ''"
                       class="cursor-pointer bg-multiselect-remove bg-center bg-no-repeat w-4 h-4 ml-1 opacity-50 hover:opacity-75">
 
-                    </span>
+                    </button>
                   </div>
                 </li>
               </ul>
@@ -237,6 +237,7 @@ import { ref, reactive, computed, onMounted } from "vue";
 
 const emit = defineEmits(['update:filters'])
 
+import metadata from "../content/metadata.json"
 import {
   Dialog,
   DialogPanel,
@@ -262,6 +263,8 @@ import {
 const selectedType = ref("");
 let mobileFiltersOpen = ref(false);
 
+
+
 const subCategories = {
   colab: { name: "Google Colab", count: 0 },
   huggingface: { name: "Huggingface Spaces", count: 0 },
@@ -272,27 +275,36 @@ const filters = reactive({
     name: "Used software",
     open: false,
     options: {
-      py3Dmol: { count: 3, checked: false },
-      alphafold: { count: 3, checked: false },
-      torch: { count: 3, checked: false },
-      amber: { count: 3, checked: false },
-      openmm: { count: 3, checked: false },
-      rdkit: { count: 3, checked: false },
-      pymatgen: { count: 3, checked: false },
-      rosetta: { count: 3, checked: false },
+      py3Dmol: { count: 0, checked: false },
     },
   },
   category: {
     name: "Category",
     open: true,
     options: {
-      biology: { count: 3, checked: true },
-      chemistry: { count: 3, checked: true },
-      materials: { count: 3, checked: true },
-      physics: { count: 3, checked: true },
+      biology: { count: 0, checked: true },
+      chemistry: { count: 0, checked: true },
+      materials: { count: 0, checked: true },
+      physics: { count: 0, checked: true },
     },
   },
 });
+metadata.forEach((item) => {
+  item.type.forEach((type) => {
+    if (type in subCategories) {
+      subCategories[type].count += 1;
+    }
+  });
+  item.used_software.forEach((software) => {
+    if (software in filters.software.options) {
+      filters.software.options[software].count += 1
+    } else {
+      filters.software.options[software] = { count: 1, checked: false }
+    }
+  });
+  filters.category.options[item.category].count += 1
+});
+
 
 const selected = computed(() => {
   let s = {
@@ -308,6 +320,7 @@ const selected = computed(() => {
     }
   }
   emit('update:filters', s)
+  console.log(selectedType)
   return s
 })
 

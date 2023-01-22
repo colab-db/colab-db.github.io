@@ -87,7 +87,6 @@
                   </div>
                   <div class="absolute bottom-0 w-full -mx-6 px-4 py-2">
 
-
                     <div class="flex items-center justify-between space-x-2">
                       <NuxtLink :to="'https://github.com/' + b.git" class="p-0.5">
                         <Icon icon="ant-design:github-filled" class="text-gray-500 w-7 h-7" />
@@ -96,7 +95,7 @@
                       <div class="flex items-center text-xs space-x-2">
 
                         <Icon icon="ant-design:star" class="text-gray-500 w-5 h-5" />
-                        <span>{{ b.stars }}</span>
+                        <span>{{ getLikesStars(b._id) }}</span>
                       </div>
                     </div>
                   </div>
@@ -111,115 +110,138 @@
   </div>
 </template>
 
-    <script setup>
-    import { Icon } from "@iconify/vue";
-    import { ref, reactive, computed, toRaw } from 'vue'
-    
-    import Fuse from 'fuse.js/dist/fuse.basic.esm'
-    
-    const fuseOptions = {
-      threshold: 0.5,
-      ignoreLocation: true,
-      keys: [
-        'title',
-        'category',
-        'creator.name',
-        'creator.github',
-        'description',
-        'type',
-        'git',
-        'tags',
-        'used_software',
-      ]
+<script setup>
+import { Icon } from "@iconify/vue";
+import { ref, reactive, computed, toRaw } from 'vue'
+
+import Fuse from 'fuse.js/dist/fuse.basic.esm'
+import metadata from '../content/metadata.json'
+
+const fuseOptions = {
+  threshold: 0.5,
+  ignoreLocation: true,
+  keys: [
+    'title',
+    'category',
+    'creator.name',
+    'creator.github',
+    'description',
+    'type',
+    'git',
+    'tags',
+    'used_software',
+  ]
+}
+function getLikesStars(id) {
+  id = id.replace("content:notebooks:", "").replace(".md", "")
+  let stars = metadata.find(x => x.id === id)['stars'];
+  let likes = metadata.find(x => x.id === id)['likes'];
+  if (stars > likes && stars > 0) {
+    return stars
+  } else if (likes > stars && likes > 0) {
+    return likes
+  } else {
+    return 0
+  }
+}
+const searchQuery = ref("")
+const filters = reactive({
+  category: [],
+  software: [],
+  type: '',
+  sort: "Newest"
+})
+const { data: notebooks } = await useAsyncData("colabs", () =>
+  queryContent("notebooks").find()
+);
+
+notebooks.value.forEach((nb, i) => {
+  let id = nb._id.replace("content:notebooks:", "").replace(".md", "")
+  let m = metadata.find(x => x.id === id)
+  console.log(m.stars)
+  console.log(m.likes)
+  console.log(m.added)
+
+})
+const fuse = computed(() => {
+  //const fuseIndex = Fuse.createIndex(fuseOptions.keys, notebooks)
+
+  return new Fuse(toRaw(notebooks.value), fuseOptions) //, fuseIndex)
+})
+
+
+function updateFilters(f) {
+  filters.category = f.category;
+  filters.software = f.software;
+  filters.type = f.type;
+}
+function updateSort(f) {
+  filters.sort = f;
+}
+const filtercomponent = ref();
+function showMenu() {
+  filtercomponent.value.showMenu()
+}
+const filteredNotebooks = computed(() => {
+  if (notebooks.value.length == 0) {
+    return []
+  }
+  let nbs = null
+  if (searchQuery.value != "") {
+    nbs = fuse.value.search(toRaw(searchQuery.value)).map(r => r.item)
+  } else {
+    nbs = notebooks.value
+  }
+
+  nbs.sort(function (a, b) {
+    if (filters.sort === "Most stars") {
+      return b.stars - a.stars
+    } else if (filters.sort === "Most comments") {
+      return b.lenComments - a.lenComments
+    } else if (filters.sort === "Newest") {
+      return b.created - a.created
+    } else {
+      return 0
     }
-    
-    const searchQuery = ref("")
-    const filters = reactive({
-      category: [],
-      software: [],
-      type: '',
-      sort: "Newest"
-    })
-    const { data: notebooks } = await useAsyncData("colabs", () =>
-      queryContent("notebooks").find()
-    );
-    
-    const fuse = computed(() => {
-      //const fuseIndex = Fuse.createIndex(fuseOptions.keys, notebooks)
-    
-      return new Fuse(toRaw(notebooks.value), fuseOptions) //, fuseIndex)
-    })
-    
-    
-    function updateFilters(f) {
-      filters.category = f.category;
-      filters.software = f.software;
-      filters.type = f.type;
-    }
-    function updateSort(f) {
-      filters.sort = f;
-    }
-    const filtercomponent = ref();
-    function showMenu() {
-      filtercomponent.value.showMenu()
-    }
-    const filteredNotebooks = computed(() => {
-      if (notebooks.value.length == 0) {
-        return []
-      }
-      let nbs = null
-      if (searchQuery.value != "") {
-        nbs = fuse.value.search(toRaw(searchQuery.value)).map(r => r.item)
+
+  })
+
+  if (filters.type != "") {
+    nbs = nbs.filter(function (nb) {
+      if (typeof (nb.type) == "string") {
+        return nb.type == filters.type
       } else {
-        nbs = notebooks.value
+        return nb.type.includes(filters.type)
       }
-      // TODO sort
-      //  else {
-      //   // Sort only if no search
-      //   modules.sort((a, b) => sort(a[orderBy.value], b[orderBy.value], sortBy.value === 'asc'))
-      // }
-      nbs.sort(function (a, b) {
-        if (filters.sort === "Most stars") {
-          return b.stars - a.stars
-        } else if (filters.sort === "Most comments") {
-          return b.lenComments - a.lenComments
-        } else if (filters.sort === "Newest") {
-          return b.created - a.created
-        } else {
-          return 0
-        }
-    
-      })
-      if (filters.type != "") {
-        nbs = nbs.filter(nb => nb.type == filters.type)
-      }
-      if (filters.software.length > 0) {
-        nbs = nbs.filter(nb => filters.software.some(c => nb.used_software.includes(c)))
-      }
-      nbs = nbs.filter(nb => filters.category.includes(nb.category))
-      return nbs
     })
-    
-    function previewImage(b) {
-      if (b.image != undefined) {
-        return b.image;
-      }
-      try {
-        url = new URL(b.image);
-        return b.image;
-      } catch (_) {
-        if (b.type == "colab") {
-          return "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Colaboratory_SVG_Logo.svg";
-        }
-        else if (b.type == "binder") {
-          return "https://mybinder.org/static/logo.svg";
-        } else if (b.type == "huggingface") {
-          return "https://huggingface.co/front/assets/huggingface_logo-noborder.svg"
-        }
-        return "https://upload.wikimedia.org/wikipedia/commons/3/38/Jupyter_logo.svg"
-      }
+  }
+  if (filters.software.length > 0) {
+    nbs = nbs.filter(nb => filters.software.some(c => nb.used_software.includes(c)))
+  }
+  nbs = nbs.filter(nb => filters.category.includes(nb.category))
+  return nbs
+})
+
+function previewImage(b) {
+  if (b.image != undefined) {
+    return b.image;
+  }
+  try {
+    url = new URL(b.image);
+    return b.image;
+  } catch (_) {
+    if (b.type == "colab") {
+      return "/colab.svg";
     }
-    
-    </script>
+    else if (b.type == "binder") {
+      return "/binder.svg";
+    } else if (b.type == "huggingface") {
+      return "/huggingface.svg"
+    }
+    return "jupyter.svg"
+  }
+}
+
+</script>
 
 

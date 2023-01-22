@@ -26,13 +26,15 @@
             </ClientOnly>
             <img v-if="props.post.image != undefined" :src="props.post.image" :alt="props.post.title"
                 class="max-h-48 mx-auto" />
-            <!-- Place this tag where you want the button to render. -->
-            <github-button :href="'https://github.com/' + props.post.git"
-                data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star"
-                data-size="large" data-show-count="true" :aria-label="'Star' + props.post.github + '  on GitHub'">Star
-            </github-button>
 
             <div class="w-full px-4 py-4 rounded-lg border-2">
+
+                <a :href="'https://hf.space/' + props.post.spacename"
+                    class="flex items-center space-x-2 hover:text-indigo-600 mb-4">
+                    <img src="/huggingface.svg" alt="Huggingface Logo" class="w-6 h-6">
+                    <span>{{ props.post.spacename }}</span>
+
+                </a>
                 <h4 class="text-lg font-semibold">Creators</h4>
                 <div class="flex flex-col space-y-2">
                     <template v-for="(creator, k) in props.post.creator" :key="`creator-${k}`">
