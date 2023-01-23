@@ -1,5 +1,5 @@
 """Models for the frontmatter metadata for the markdown files."""
-from datetime import date
+from datetime import date, datetime
 from enum import Enum
 from typing import List, Optional, Union
 
@@ -41,5 +41,5 @@ class NotebookMeta(BaseModel):
     stars: Optional[int]
     likes: Optional[int]
     spacename: Optional[str]
-    last_modified: Optional[datetime]
+    last_modified: Optional[date]
     n_comments: Optional[int]
