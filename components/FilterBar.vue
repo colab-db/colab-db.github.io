@@ -4,7 +4,7 @@
             <span>{{ props.lenNotebooks }} Notebooks</span>
             <div v-if="q != ''" class="flex items-center space-x-1"><span>contain</span> <span
                     class="bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{{
-                            q
+                        q
                     }}</span></div>
         </div>
         <div class="flex items-center">
@@ -115,7 +115,7 @@ const props = defineProps(['lenNotebooks', 'q'])
 
 const selectedOption = ref('Newest');
 const sortOptions = {
-    "Most Stars": true,
+    "Most stars": true,
     "Newest": false,
     "Most comments": false,
 };

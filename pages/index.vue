@@ -91,11 +91,20 @@
                       <NuxtLink :to="'https://github.com/' + b.git" class="p-0.5">
                         <Icon icon="ant-design:github-filled" class="text-gray-500 w-7 h-7" />
                       </NuxtLink>
+                      <div class="flex justify-end space-x-2">
 
-                      <div class="flex items-center text-xs space-x-2">
 
-                        <Icon icon="ant-design:star" class="text-gray-500 w-5 h-5" />
-                        <span>{{ getLikesStars(b._id) }}</span>
+                        <div class="flex items-center text-xs space-x-2">
+
+                          <Icon icon="ant-design:star" class="text-gray-500 w-5 h-5" />
+                          <span>{{ getLikesStars(b._id) }} </span>
+                        </div>
+                        <div class="flex items-center text-xs space-x-2">
+
+                          <Icon icon="ant-design:comment" class="text-gray-500 w-5 h-5" />
+                          <span v-if="b.n_comments > 0">{{ b.n_comments }} </span>
+                          <span v-else>0</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -132,6 +141,7 @@ const fuseOptions = {
     'used_software',
   ]
 }
+
 function getLikesStars(id) {
   id = id.replace("content:notebooks:", "").replace(".md", "")
   let stars = metadata.find(x => x.id === id)['stars'];
@@ -158,11 +168,14 @@ const { data: notebooks } = await useAsyncData("colabs", () =>
 notebooks.value.forEach((nb, i) => {
   let id = nb._id.replace("content:notebooks:", "").replace(".md", "")
   let m = metadata.find(x => x.id === id)
-  console.log(m.stars)
-  console.log(m.likes)
-  console.log(m.added)
+  notebooks.value[i].likes = m.likes
+  notebooks.value[i].stars = m.stars
+  notebooks.value[i].last_modified = m.last_modified
+  notebooks.value[i].n_comments = m.n_comments
+
 
 })
+console.log(notebooks.value)
 const fuse = computed(() => {
   //const fuseIndex = Fuse.createIndex(fuseOptions.keys, notebooks)
 
@@ -195,11 +208,14 @@ const filteredNotebooks = computed(() => {
 
   nbs.sort(function (a, b) {
     if (filters.sort === "Most stars") {
-      return b.stars - a.stars
+
+      let stars_a = a.stars > a.likes ? a.stars : a.likes
+      let stars_b = b.stars > b.likes ? b.stars : b.likes
+      return stars_b - stars_a
     } else if (filters.sort === "Most comments") {
-      return b.lenComments - a.lenComments
+      return b.n_comments - a.n_comments
     } else if (filters.sort === "Newest") {
-      return b.created - a.created
+      return b.last_modified - a.last_modified
     } else {
       return 0
     }
