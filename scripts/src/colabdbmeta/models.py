@@ -41,3 +41,5 @@ class NotebookMeta(BaseModel):
     stars: Optional[int]
     likes: Optional[int]
     spacename: Optional[str]
+    last_modified: Optional[datetime]
+    n_comments: Optional[int]
