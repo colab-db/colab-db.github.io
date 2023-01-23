@@ -22,7 +22,7 @@ def get_n_comments(id: str):
         repo = gh.get_repo("colab-db/colab-db.github.io")
         all_issues = list(repo.get_issues(labels=["Comment"]))
         all_issues_titles = [issue.title for issue in all_issues]
-        index =  all_issues_titles.index(id)
+        index =  all_issues_titles.index(f"/notebooks/{id}/")
         return  repo.get_issue(number=all_issues[index].number).comments
     except Exception as e:
         logger.exception(e)
