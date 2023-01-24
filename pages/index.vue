@@ -170,15 +170,12 @@ notebooks.value.forEach((nb, i) => {
   let m = metadata.find(x => x.id === id)
   notebooks.value[i].likes = m.likes
   notebooks.value[i].stars = m.stars
-  notebooks.value[i].added = m.added
   notebooks.value[i].n_comments = m.n_comments
-
-
 })
-console.log(notebooks.value)
+
+
 const fuse = computed(() => {
   //const fuseIndex = Fuse.createIndex(fuseOptions.keys, notebooks)
-
   return new Fuse(toRaw(notebooks.value), fuseOptions) //, fuseIndex)
 })
 
@@ -215,7 +212,9 @@ const filteredNotebooks = computed(() => {
     } else if (filters.sort === "Most comments") {
       return b.n_comments - a.n_comments
     } else if (filters.sort === "Newest") {
-      return b.added - a.added
+      let d_b = new Date(b.added)
+      let d_a = new Date(a.added)
+      return d_b - d_a
     } else {
       return 0
     }

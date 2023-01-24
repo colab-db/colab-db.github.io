@@ -42,7 +42,7 @@
                             <input id="doi" name="doi" type="text" v-model="doi" required=""
                                 class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Digital Object Identifier (DOI) of preprint/publication" />
-                            <div class="text-red-600 text-sm items-center flex space-x-2" v-if="checkedDoi==null">
+                            <div class="text-red-600 text-sm items-center flex space-x-2" v-if="checkedDoi == null">
                                 <Icon class="w-4 h-4" icon="heroicons:exclamation-triangle" />
                                 <span>DOI not valid</span>
                             </div>
@@ -201,6 +201,10 @@
                             </div>
                         </div>
                         <div>
+                            <p>Pressing submit will take you to GitHub to where you need to sign-in and then click on
+                                <code>Commit new file</code> to add your submission to the repository
+                                .
+                            </p>
                             <button type="submit" class="
                       relative
                       inline-flex
@@ -254,6 +258,8 @@ import Multiselect from "@vueform/multiselect";
 
 import { ref, reactive, watch } from "vue";
 
+import metadata from "../content/metadata.json";
+
 const doi = ref("");
 let checkedDoi = ref("")
 const notebook = reactive({
@@ -276,6 +282,7 @@ const notebook = reactive({
     category: "",
     software: [],
     text: "",
+    added: new Date().toISOString().split("T")[0],
 });
 
 function insertAuthor() {
@@ -299,12 +306,15 @@ const options = [
     { value: "huggingface", name: "Huggingface", icon: "/huggingface.svg" },
 ];
 
-const tags = [
-    { value: "chemoinformatics", label: "Chemoinformatics" },
-    { value: "drugdiscovery", label: "Drug discovery" },
-    { value: "proteindesign", label: "Protein design" },
-    { value: "structureprediction", label: "Structure prediction" },
-];
+
+let tags = []
+metadata.forEach((item) => {
+    item.tags.forEach((tag) => {
+        if (tags.includes(tag) == false) {
+            tags.push(tag)
+        }
+    });
+});
 
 const licenses = [
     { value: "mit", label: "MIT" },
@@ -328,21 +338,15 @@ const categories = [
     { value: "physics", label: "Physics" },
     { value: "materials", label: "Materials" },
 ];
-const softwares = [
-    { value: "py3dmol", label: "py3Dmol" },
-    { value: "tensorflow", label: "Tensorflow" },
-    { value: "keras", label: "Keras" },
-    { value: "scikit-learn", label: "Scikit-learn" },
-    { value: "rosetta", label: "Rosetta" },
-    { value: "torch", label: "PyTorch" },
-    { value: "jax", label: "Jax" },
-    { value: "rdkit", label: "rdkit" },
-    { value: "openbabel", label: "Openbabel" },
-    { value: "openmm", label: "OpenMM" },
-    { value: "Gromacs", label: "Gromacs" },
-    { value: "MDAnalysis", label: "MDAnalysis" },
-    { value: "openmolecules", label: "OpenMolecules" },
-];
+
+let softwares = []
+metadata.forEach((item) => {
+    item.used_software.forEach((software) => {
+        if (softwares.includes(software) == false) {
+            softwares.push(software)
+        }
+    });
+});
 
 const multiselectStyleTags = {
     container:
@@ -695,6 +699,7 @@ title: "${notebook.title}"
 url: "${notebook.url}"
 git: ${notebook.git}
 description: ${notebook.desc}
+added: ${notebook.added}
 type: ${formattedType}
 image: ${notebook.image}
 category: ${notebook.category}

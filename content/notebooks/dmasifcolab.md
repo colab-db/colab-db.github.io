@@ -5,6 +5,7 @@ git: casperg92/MaSIF_colab
 url: https://colab.research.google.com/github/casperg92/MaSIF_colab/blob/main/dMaSIF_Colab_V1.ipynb
 type: colab
 category: biology
+added: 2022-07-04
 tags:
  - Bio
  - Geometric deep learning

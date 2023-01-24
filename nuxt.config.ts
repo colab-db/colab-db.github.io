@@ -22,6 +22,10 @@ export default defineNuxtConfig({
 				depth: 3,
 				searchDepth: 3,
 			},
+			remarkPlugins: [
+				'remark-math'
+			],
+			rehypePlugins: [['rehype-katex', { output: 'html' }]]
 		},
 		highlight: {
 			theme: "dracula-soft",

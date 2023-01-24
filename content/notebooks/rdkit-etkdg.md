@@ -9,6 +9,7 @@ type:
  - binder
  - colab
 category: chemistry
+added: 2022-12-02
 tags:
  - chemoinformatics
  - drug discovery
@@ -23,4 +24,3 @@ creator:
 ---
 
 3D conformers of molecules containing piperazine (or cyclohexane) using RDKit tend to get a distorted ring conformation. RDKit's ETKDG (Experimental Torsion angle Knowledge-based Distance Geometry) algorithm can be used to fix ring confromations. This notebook demonstrates its use and possible problems. It shows how to filter out non-desirable conformers or improve the RDKit's conformer generation routine.
-
