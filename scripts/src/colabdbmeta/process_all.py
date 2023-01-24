@@ -16,8 +16,6 @@ def process_all(indir):
     metadata_collection = []
     for file_path in glob(os.path.join(indir, "*.md")):
         meta = parse_and_validate_frontmatter(file_path)
-        #add last modified date
-        meta.last_modified = os.path.getmtime(file_path)
         id = Path(file_path).stem
         # fetch github comments from colab-db/colab-db.github.io repo powered by utteranc.es
         meta.n_comments = get_n_comments(id)

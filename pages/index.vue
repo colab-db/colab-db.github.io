@@ -170,7 +170,7 @@ notebooks.value.forEach((nb, i) => {
   let m = metadata.find(x => x.id === id)
   notebooks.value[i].likes = m.likes
   notebooks.value[i].stars = m.stars
-  notebooks.value[i].last_modified = m.last_modified
+  notebooks.value[i].added = m.added
   notebooks.value[i].n_comments = m.n_comments
 
 
@@ -215,7 +215,7 @@ const filteredNotebooks = computed(() => {
     } else if (filters.sort === "Most comments") {
       return b.n_comments - a.n_comments
     } else if (filters.sort === "Newest") {
-      return b.last_modified - a.last_modified
+      return b.added - a.added
     } else {
       return 0
     }
