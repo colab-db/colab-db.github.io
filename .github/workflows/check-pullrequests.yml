@@ -24,7 +24,7 @@ jobs:
       - name: Validate all changed markdown files
         id: validation
         run: |
-          echo "Thank you for submitting a new entry to `colab-db.github.io` ! :rocket: <br> Here is the validation report for the submitted entries:" > ./validation-message
+          echo "Thank you for submitting a new entry to colab-db.github.io ! :rocket: <br> Here is the validation report for the submitted entries:" > ./validation-message
           echo "valid=true" >> $GITHUB_OUTPUT # overwritten by validator if any file is wrong
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             if [ "$file" == "content/notebooks/*.md" ] 
