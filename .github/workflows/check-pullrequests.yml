@@ -7,24 +7,36 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # windows-latest | macos-latest
+    runs-on: ubuntu-latest
     name: Test changed-files
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
-
+          fetch-depth: 0
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v14.6
-
-      - name: List all changed files
+      - uses: actions/setup-node@v3
+      - name: Install node packages
+        run: npm i ajv ajv-formats gray-matter ajv-error-messages json2md @actions/core
+      - name: Validate all changed markdown files
+        id: validation
         run: |
+          echo "Thank you for submitting a new entry to `colab-db.github.io` ! :rocket: <br> Here is the validation report for the submitted entries:" > ./validation-message
+          echo "valid=true" >> $GITHUB_OUTPUT # overwritten by validator if any file is wrong
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
+            if [ "$file" == "content/notebooks/*.md" ] 
+              then
+                     node utils/validate.json $file      
+              fi
           done
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v2
         with:
-          message: |
-            Hello world ! :wave:
+          filePath: ./validation-message
+      - name: Validation successful?
+        run: |
+          if ${{ steps.validation.outputs.valid == false }} {
+            exit 1
+          }
+
