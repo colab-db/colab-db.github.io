@@ -5,7 +5,7 @@ spacename: simonduerr/ProteinMPNN
 url: https://hf.space/simonduerr/ProteinMPNN
 type: huggingface
 category: biology
-added: 2022-06-07
+added: "2022-06-07"
 tags:
  - Bio
  - sequence design

@@ -10,7 +10,7 @@ tags:
  - Bio
  - structure prediction
 image: https://github.com/sokrypton/ColabFold/raw/main/.github/ColabFold_Marv_Logo.png
-added: 2022-06-04
+added: "2022-06-04"
 used_software:
  - py3Dmol
  - jax
@@ -37,6 +37,6 @@ creator:
 
 # ColabFold: AlphaFold2 using MMseqs2
 
-Easy to use protein structure and complex prediction using AlphaFold2 and Alphafold2-multimer. Sequence alignments/templates are generated through MMseqs2 and HHsearch. For more details, see bottom of the notebook, checkout the ColabFold GitHub and read our manuscript. 
+Easy to use protein structure and complex prediction using AlphaFold2 and Alphafold2-multimer. Sequence alignments/templates are generated through MMseqs2 and HHsearch. For more details, see bottom of the notebook, checkout the ColabFold GitHub and read our manuscript.
 
 Mirdita M, Schütze K, Moriwaki Y, Heo L, Ovchinnikov S, Steinegger M. ColabFold: Making protein folding accessible to all. Nature Methods, 2022

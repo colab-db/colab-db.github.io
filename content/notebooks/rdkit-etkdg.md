@@ -9,7 +9,7 @@ type:
  - binder
  - colab
 category: chemistry
-added: 2022-12-02
+added: "2022-12-02"
 tags:
  - chemoinformatics
  - drug discovery

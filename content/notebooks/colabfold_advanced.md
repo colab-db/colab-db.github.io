@@ -10,7 +10,7 @@ tags:
  - Bio
  - structure prediction
 image: https://github.com/sokrypton/ColabFold/raw/main/.github/ColabFold_Marv_Logo.png
-added: 2022-06-04
+added: "2022-06-04"
 used_software:
  - py3Dmol
  - jax

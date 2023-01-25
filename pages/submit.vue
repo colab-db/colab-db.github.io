@@ -638,7 +638,7 @@ watch(doi, async (newDOI, oldDoi) => {
 
 
 function makePullRequest(notebook) {
-    const filename = notebook.title.replace(/\s/g, "-") + ".md";
+    const filename = notebook.title.replace(/\s+/g, "_").toLowerCase() + ".md";
 
     //Format tags
     const formattedTags =
@@ -657,15 +657,15 @@ function makePullRequest(notebook) {
         notebook.authors
             .map((author, i) => {
                 return (
-                    " - \n name: " +
+                    " - \n name: \"" +
                     author.name +
-                    "\n" +
-                    " twitter: " +
+                    "\"\n" +
+                    " twitter: \"" +
                     author.twitter +
-                    "\n" +
-                    " github: " +
+                    "\"\n" +
+                    " github: \"" +
                     author.github +
-                    "\n" +
+                    "\"\n" +
                     " orcid: " +
                     author.orcid
                 );
@@ -699,7 +699,7 @@ title: "${notebook.title}"
 url: "${notebook.url}"
 git: ${notebook.git}
 description: ${notebook.desc}
-added: ${notebook.added}
+added: "${notebook.added}"
 type: ${formattedType}
 image: ${notebook.image}
 category: ${notebook.category}
