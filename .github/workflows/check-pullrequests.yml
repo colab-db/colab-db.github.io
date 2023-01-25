@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-node@v3
       - name: Install node packages
         run: |
-          rm package.json tsconfig.json yarn.lock node_modules
+          rm package.json tsconfig.json yarn.lock
           npm i ajv ajv-formats gray-matter ajv-error-messages json2md @actions/core
       - name: Validate all changed markdown files
         id: validation
