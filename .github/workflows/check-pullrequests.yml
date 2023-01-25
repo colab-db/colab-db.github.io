@@ -18,7 +18,9 @@ jobs:
         uses: tj-actions/changed-files@v14.6
       - uses: actions/setup-node@v3
       - name: Install node packages
-        run: npm i ajv ajv-formats gray-matter ajv-error-messages json2md @actions/core
+        run: |
+          rm package.json tsconfig.json yarn.lock node_modules
+          npm i ajv ajv-formats gray-matter ajv-error-messages json2md @actions/core
       - name: Validate all changed markdown files
         id: validation
         run: |

@@ -600,7 +600,7 @@ async function retrieveInfoFromMeta(doi) {
         let doistr = "https://api.datacite.org/dois/" + doi
         doiMetadata = await getDataCite(doistr)
         authors = doiMetadata.data.attributes.creators.map(function (el) {
-            return { 'name': el.name }
+            return { 'name': el.name, 'orcid': '', 'twitter': '', 'github': '' }
         }
         )
     }
@@ -608,7 +608,7 @@ async function retrieveInfoFromMeta(doi) {
         let doistr = "https://api.crossref.org/works/" + doi + "/?mailto=dev@simonduerr.eu"
         doiMetadata = await getCrossRef(doistr)
         authors = doiMetadata.message.author.map(function (el) {
-            return { 'name': el.given + " " + el.family, 'orcid': el.ORCID.replace("http://orcid.org/", "") }
+            return { 'name': el.given + " " + el.family, 'twitter': '', 'github': '', 'orcid': el.ORCID.replace("http://orcid.org/", "") }
         }
         )
     }
