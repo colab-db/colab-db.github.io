@@ -30,7 +30,7 @@ jobs:
           echo "valid=true" >> $GITHUB_OUTPUT # overwritten by validator if any file is wrong
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
               echo $file  
-              node utils/validate.json $file      
+              node utils/validate.js $file      
           done
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v2
