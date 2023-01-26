@@ -17,30 +17,30 @@ used_software:
  - pytorch
 creator: 
  - 
- name: "Corso, Gabriele"
- twitter: "gcorso"
- github: "gcorso"
- orcid:  
+  name: "Corso, Gabriele"
+  twitter: "gcorso"
+  github: "gcorso"
+  orcid:  
  - 
- name: "Stärk, Hannes"
- twitter: "HannesStaerk"
- github: "  "
- orcid:   
+  name: "Stärk, Hannes"
+  twitter: "HannesStaerk"
+  github: "  "
+  orcid:   
  - 
- name: "Jing, Bowen"
- twitter: " "
- github: " "
- orcid:  
+  name: "Jing, Bowen"
+  twitter: " "
+  github: " "
+  orcid:  
  - 
- name: "Barzilay, Regina"
- twitter: " "
- github: " "
- orcid:  
+  name: "Barzilay, Regina"
+  twitter: " "
+  github: " "
+  orcid:  
  - 
- name: "Jaakkola, Tommi"
- twitter: " "
- github: " "
- orcid:  
+  name: "Jaakkola, Tommi"
+  twitter: " "
+  github: " "
+  orcid:  
 
 ---
 Implementation of DiffDock, state-of-the-art method for molecular docking, by Gabriele Corso*, Hannes Stark*, Bowen Jing*, Regina Barzilay and Tommi Jaakkola.  
