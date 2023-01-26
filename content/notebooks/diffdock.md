@@ -1,11 +1,10 @@
 ---
 title: "DiffDock"
 url: "https://huggingface.co/spaces/simonduerr/diffdock"
-git: gcorso/diffdock
+git: simonduerr/diffdock
 description: Dock small ligands using a diffusion model
 added: "2023-01-25"
-type: 
- - huggingface
+type: huggingface
 image: 
 category: chemistry
 license: mit
@@ -43,4 +42,4 @@ creator:
   orcid:  
 
 ---
-Implementation of DiffDock, state-of-the-art method for molecular docking, by Gabriele Corso*, Hannes Stark*, Bowen Jing*, Regina Barzilay and Tommi Jaakkola. 
+Implementation of DiffDock, state-of-the-art method for molecular docking, by Gabriele Corso*, Hannes Stark*, Bowen Jing*, Regina Barzilay and Tommi Jaakkola.

@@ -29,10 +29,10 @@
 
             <div class="w-full px-4 py-4 rounded-lg border-2">
 
-                <a :href="'https://hf.space/' + props.post.spacename"
+                <a :href="'https://hf.space/' + props.post.git"
                     class="flex items-center space-x-2 hover:text-indigo-600 mb-4">
                     <img src="/huggingface.svg" alt="Huggingface Logo" class="w-6 h-6">
-                    <span>{{ props.post.spacename }}</span>
+                    <span>{{ props.post.git }}</span>
 
                 </a>
                 <h4 class="text-lg font-semibold">Creators</h4>
@@ -97,7 +97,7 @@
         </div>
 
         <div class="w-2/3 border-2 rounded-xl">
-            <iframe :src="'https://hf.space/embed/' + props.post.spacename + '/'" frameBorder="0" title="Gradio app"
+            <iframe :src="'https://hf.space/embed/' + props.post.git + '/'" frameBorder="0" title="Gradio app"
                 class="container p-0 h-screen flex-grow space-iframe" allow="accelerometer; ambient-light-sensor; autoplay; battery; camera; document-domain; encrypted-media;
             fullscreen; geolocation; gyroscope; layout-animations; legacy-image-formats; magnetometer; microphone; midi;
             oversized-images; payment; picture-in-picture; publickey-credentials-get; sync-xhr; usb; vr ; wake-lock;

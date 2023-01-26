@@ -97,7 +97,7 @@
                         <div class="flex items-center text-xs space-x-2">
 
                           <Icon icon="ant-design:star" class="text-gray-500 w-5 h-5" />
-                          <span>{{ getLikesStars(b._id) }} </span>
+                          <span>{{ getLikesStars(b.stars, b.likes) }} </span>
                         </div>
                         <div class="flex items-center text-xs space-x-2">
 
@@ -142,10 +142,8 @@ const fuseOptions = {
   ]
 }
 
-function getLikesStars(id) {
-  id = id.replace("content:notebooks:", "").replace(".md", "")
-  let stars = metadata.find(x => x.id === id)['stars'];
-  let likes = metadata.find(x => x.id === id)['likes'];
+function getLikesStars(stars, likes) {
+
   if (stars > likes && stars > 0) {
     return stars
   } else if (likes > stars && likes > 0) {
@@ -165,13 +163,22 @@ const { data: notebooks } = await useAsyncData("colabs", () =>
   queryContent("notebooks").find()
 );
 
-notebooks.value.forEach((nb, i) => {
+
+await notebooks.value.forEach((nb, i) => {
   let id = nb._id.replace("content:notebooks:", "").replace(".md", "")
   let m = metadata.find(x => x.id === id)
+  if (m == undefined) {
+    m = {
+      likes: 0,
+      stars: 0,
+      n_comments: 0
+    }
+  }
   notebooks.value[i].likes = m.likes
   notebooks.value[i].stars = m.stars
   notebooks.value[i].n_comments = m.n_comments
 })
+
 
 
 const fuse = computed(() => {

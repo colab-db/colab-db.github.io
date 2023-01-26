@@ -21,8 +21,8 @@ def process_all(indir):
         meta.n_comments = get_n_comments(id)
         if meta.git:
             meta.stars = get_stars(meta.git)
-        if meta.spacename:
-            meta.likes = get_likes(meta.spacename)
+        if meta.git and "huggingface" in meta.type:
+            meta.likes = get_likes(meta.git)
         # workaround because https://github.com/samuelcolvin/pydantic/issues/1409 is not solved
         metadata_collection.append(json.loads(meta.json()))
     return metadata_collection

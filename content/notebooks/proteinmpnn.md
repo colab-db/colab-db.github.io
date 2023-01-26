@@ -1,7 +1,7 @@
 ---
 title: 'ProteinMPNN'
 description: 'Fast fixed backbone sequence redesign'
-spacename: simonduerr/ProteinMPNN
+git: simonduerr/ProteinMPNN
 url: https://hf.space/simonduerr/ProteinMPNN
 type: huggingface
 category: biology
