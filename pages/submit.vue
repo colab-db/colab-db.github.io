@@ -660,13 +660,13 @@ function makePullRequest(notebook) {
                     " - \n name: \"" +
                     author.name +
                     "\"\n" +
-                    " twitter: \"" +
+                    "  twitter: \"" +
                     author.twitter +
                     "\"\n" +
-                    " github: \"" +
+                    "  github: \"" +
                     author.github +
                     "\"\n" +
-                    " orcid: " +
+                    "  orcid: " +
                     author.orcid
                 );
             })
