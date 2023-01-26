@@ -16,6 +16,8 @@ jobs:
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v14.6
+        with:
+          files: content/notebooks/*.md
       - uses: actions/setup-node@v3
       - name: Install node packages
         run: |
@@ -27,10 +29,8 @@ jobs:
           echo "Thank you for submitting a new entry to colab-db.github.io ! :rocket: <br> Here is the validation report for the submitted entries:" > ./validation-message
           echo "valid=true" >> $GITHUB_OUTPUT # overwritten by validator if any file is wrong
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            if [ "$file" == "content/notebooks/*.md" ] 
-              then
-                     node utils/validate.json $file      
-              fi
+              echo $file  
+              node utils/validate.json $file      
           done
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v2
@@ -38,7 +38,7 @@ jobs:
           filePath: ./validation-message
       - name: Validation successful?
         run: |
-          if ${{ steps.validation.outputs.valid == false }} {
+          if ${{ steps.validation.outputs.valid}} {
             exit 1
           }
 
