@@ -22,7 +22,7 @@ jobs:
       - name: Install node packages
         run: |
           rm package.json tsconfig.json yarn.lock
-          npm i ajv ajv-formats gray-matter ajv-error-messages json2md @actions/core
+          npm i ajv ajv-formats gray-matter ajv-error-messages ajv-errors json2md @actions/core
       - name: Validate all changed markdown files
         id: validation
         run: |
