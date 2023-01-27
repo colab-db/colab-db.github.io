@@ -657,7 +657,7 @@ function makePullRequest(notebook) {
         notebook.authors
             .map((author, i) => {
                 return (
-                    " - \n name: \"" +
+                    " - \n  name: \"" +
                     author.name +
                     "\"\n" +
                     "  twitter: \"" +

@@ -6,7 +6,7 @@ const core = require('@actions/core');
 const Ajv = require("ajv")
 
 const ajv = new Ajv({
-    allErrors: true, validateFormats: true
+    allErrors: true, validateFormats: true, useDefaults: 'empty'
 })
 const addFormats = require("ajv-formats")
 
@@ -52,12 +52,16 @@ const schema = {
         },
         added: {
             type: 'string',
-            format: 'date'
+            format: 'date',
+            errorMessage: "should be a valid date in the format YYYY-MM-DD"
         },
         image: {
-            type: 'string',
-            format: 'uri',
-            errorMessage: "should be a valid url to the image"
+            anyOf: [{
+                type: 'string', format: 'uri',
+                errorMessage: "should be a valid url to the image or empty"
+            },
+            { type: 'null' }
+            ]
         },
         url: {
             anyOf: [
@@ -95,17 +99,20 @@ const schema = {
             errorMessage: "should be one of biology, chemistry, materials, physics"
         },
         git: {
-            type: 'string',
-            pattern: '^[a-zA-Z0-9-]+/[a-zA-Z0-9-]+$',
-            errorMessage: "should be a repo in format owner/repo-name"
-
+            anyOf: [{
+                type: 'string',
+                pattern: '^[a-zA-Z0-9-]+/[a-zA-Z0-9-]+$',
+                errorMessage: "should be a repo in format owner/repo-name"
+            },
+            { type: 'null' }
+            ]
         },
         description: {
             type: 'string',
             maxLength: 200
         },
         license: {
-            type: 'string',
+            type: ['string', 'null'],
         },
         creator: {
             type: 'array',
@@ -116,27 +123,22 @@ const schema = {
                         type: 'string'
                     },
                     twitter: {
-                        type: 'string',
+                        type: ['string', 'null'],
                         format: 'twitter',
                         errorMessage: "should be a valid twitter handle without @"
                     },
                     github: {
-                        type: 'string',
+                        type: ['string', 'null'],
                         format: 'github',
                         errorMessage: "should be a valid github handle without @ or https://github.com"
                     },
                     orcid: {
-                        type: 'string',
+                        type: ['string', 'null'],
                         pattern: '^\\d{4}-\\d{4}-\\d{4}-\\d{3}|X$',
                         errorMessage: "should be a valid ORCID without https://orcid.org/"
                     }
                 },
             }
-        }
-    },
-    errorMessage: {
-        properties: {
-            added: "should be a valid date YYYY-MM-DD",
         }
     }
 }
@@ -151,7 +153,7 @@ fs.readFile(filename, 'utf8', function (err, data) {
     let frontmatter = matter(data)['data']
     const validate = ajv.compile(schema)
     const valid = validate(frontmatter)
-
+    console.log(frontmatter)
     if (valid) {
         output.valid = true
 
@@ -183,5 +185,3 @@ fs.readFile(filename, 'utf8', function (err, data) {
     }
 
 })
-
-
