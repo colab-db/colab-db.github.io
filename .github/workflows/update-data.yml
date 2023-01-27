@@ -9,6 +9,14 @@ on:
       - closed
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: |
+          echo ${{github.event.pull_request.merged}}
+          echo ${{github.event_name}}
+    runs
   build:
     if: ${{ (github.event.pull_request.merged == true) || (github.event_name == 'schedule')  || (github.event_name == 'workflow_dispatch') }}
     runs-on: ubuntu-latest
