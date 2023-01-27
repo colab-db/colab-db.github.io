@@ -178,8 +178,8 @@ fs.readFile(filename, 'utf8', function (err, data) {
 
     } else {
         let content = [{ h6: ':white_check_mark: ' + filename }]
-        content.push({ hr: "" })
         content.push({ p: "Sucessfully validated and ready to merge" })
+        content.push({ hr: "" })
         fs.writeFile('./validation-message', json2md(content), { flag: 'a+' }, err => { });
 
     }
