@@ -37,8 +37,8 @@
                             your Github Account, "Propose new file" and click the "Create Pull Request" button in the tab we
                             opened for you.
                         </p>
-                        <img class="mx-auto" src="step1.png" alt="Propose new file">
-                        <img class="mx-auto" src="step2.png" alt="Create pull request">
+                        <img class="mx-auto" src="/step1.png" alt="Propose new file">
+                        <img class="mx-auto" src="/step2.png" alt="Create pull request">
                         <p class="pb-2">
                             Once approved, your entry will be added to the list.
 
@@ -47,36 +47,36 @@
                     </div>
                     <div class="flex justify-center items-center">
                         <button type="submit" class="
-                          relative
-                          inline-flex
-                          w-full
-                          items-center
-                          justify-center
-                          p-0.5
-                          overflow-hidden
-                          text-base
-                          font-medium
-                          
-                          rounded-lg
-                          group
-                          bg-gradient-to-br
-                          from-purple-500
-                          to-pink-500
-                          hover:from-purple-600 group-hover:to-pink-600
-                          hover:text-white
-                          text-white
-                          focus:ring-4 focus:outline-none focus:ring-purple-200
-                          dark:focus:ring-purple-800
-                        ">
+                              relative
+                              inline-flex
+                              w-full
+                              items-center
+                              justify-center
+                              p-0.5
+                              overflow-hidden
+                              text-base
+                              font-medium
+                              
+                              rounded-lg
+                              group
+                              bg-gradient-to-br
+                              from-purple-500
+                              to-pink-500
+                              hover:from-purple-600 group-hover:to-pink-600
+                              hover:text-white
+                              text-white
+                              focus:ring-4 focus:outline-none focus:ring-purple-200
+                              dark:focus:ring-purple-800
+                            ">
                             <span class="
-                            w-full
-                            px-5
-                            py-2.5
-                            transition-all
-                            ease-in
-                            duration-75
-                            rounded-md
-                          " @click="$emit('closereset')">
+                                w-full
+                                px-5
+                                py-2.5
+                                transition-all
+                                ease-in
+                                duration-75
+                                rounded-md
+                              " @click="$emit('closereset')">
                                 Close and reset form
                             </span>
                         </button>
