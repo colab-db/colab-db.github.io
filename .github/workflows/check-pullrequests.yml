@@ -39,6 +39,9 @@ jobs:
       - name: Validation successful?
         run: |
           if ${{ steps.validation.outputs.valid}} ; then
+            exit 0
+          else
+            echo "Validation not sucessful"
             exit 1
           fi
 
