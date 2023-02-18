@@ -39,7 +39,7 @@
                         </div>
                         <div class="my-3">
                             <label for="doi" class="sr-only">DOI</label>
-                            <input id="doi" name="doi" type="text" v-model="doi" required=""
+                            <input id="doi" name="doi" type="text" v-model="doi"
                                 class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Digital Object Identifier (DOI) of preprint/publication" />
                             <div class="text-red-600 text-sm items-center flex space-x-2" v-if="checkedDoi == null">
@@ -51,7 +51,7 @@
                         </div>
                         <div class="my-3">
                             <label for="image" class="sr-only">Logo</label>
-                            <input id="image" name="image" type="text" v-model="notebook.image" required=""
+                            <input id="image" name="image" type="text" v-model="notebook.image"
                                 class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="url to image" />
                         </div>
@@ -152,7 +152,6 @@
                                                 <Icon class="w-6 h-6" icon="ant-design:twitter-outlined" />
                                             </div>
                                             <input id="twitter" v-model="author.twitter" name="twitter" type="text"
-                                                required=""
                                                 class="appearance-none rounded-r-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                                 placeholder="Twitter" />
                                         </div>
@@ -168,7 +167,6 @@
                                                 <Icon class="w-6 h-6" icon="ant-design:github-outlined" />
                                             </div>
                                             <input id="github" name="github" v-model="author.github" type="text"
-                                                required=""
                                                 class="appearance-none rounded-r-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                                 placeholder="Github" />
                                         </div>
@@ -184,7 +182,6 @@
                                                 <Icon class="w-6 h-6" icon="academicons:orcid" />
                                             </div>
                                             <input id="orcid" name="orcid" v-model="author.orcid" type="text"
-                                                required=""
                                                 class="appearance-none rounded-r-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                                 placeholder="Orcid" />
                                         </div>
@@ -201,9 +198,8 @@
                             </div>
                         </div>
                         <div>
-                            <p>Pressing submit will take you to GitHub to where you need to sign-in and then click on
-                                <code>Commit new file</code> to add your submission to the repository
-                                .
+                            <p>Pressing submit will take you to GitHub to where you need to sign-in and then create a
+                                pull request .
                             </p>
                             <button type="submit" class="
                       relative
@@ -245,6 +241,7 @@
             </div>
         </main>
     </div>
+    <Modal v-if="showModal" @closemodal="close" @closereset="closereset" />
 </template>
 
 
@@ -256,11 +253,15 @@ import { UserAddIcon } from "@heroicons/vue/outline";
 import { Icon } from "@iconify/vue";
 import Multiselect from "@vueform/multiselect";
 
+import Modal from "../components/Modal.vue";
+
 import { ref, reactive, watch } from "vue";
 
 import metadata from "../content/metadata.json";
 
 const doi = ref("");
+
+let showModal = ref(false);
 let checkedDoi = ref("")
 const notebook = reactive({
     title: "",
@@ -284,6 +285,34 @@ const notebook = reactive({
     text: "",
     added: new Date().toISOString().split("T")[0],
 });
+
+function close() {
+    showModal.value = false;
+}
+
+function closereset() {
+    showModal.value = false;
+    notebook.title = ""
+    notebook.desc = ""
+    notebook.authors = [
+        {
+            name: "",
+            twitter: "",
+            github: "",
+            orcid: "",
+        },
+    ]
+    notebook.license = ""
+    notebook.url = ""
+    notebook.git = ""
+    notebook.image = ""
+    notebook.type = []
+    notebook.nbtags = []
+    notebook.category = ""
+    notebook.software = []
+    notebook.text = ""
+    notebook.added = new Date().toISOString().split("T")[0]
+}
 
 function insertAuthor() {
     notebook.authors.push({
@@ -607,8 +636,14 @@ async function retrieveInfoFromMeta(doi) {
     else {
         let doistr = "https://api.crossref.org/works/" + doi + "/?mailto=dev@simonduerr.eu"
         doiMetadata = await getCrossRef(doistr)
+        console.log(doiMetadata)
         authors = doiMetadata.message.author.map(function (el) {
-            return { 'name': el.given + " " + el.family, 'twitter': '', 'github': '', 'orcid': el.ORCID.replace("http://orcid.org/", "") }
+            if (el.hasOwnProperty("ORCID")) {
+                return { 'name': el.given + " " + el.family, 'twitter': '', 'github': '', 'orcid': el.ORCID.replace("http://orcid.org/", "") }
+            }
+            else {
+                return { 'name': el.given + " " + el.family, 'twitter': '', 'github': '', 'orcid': '' }
+            }
         }
         )
     }
@@ -720,8 +755,10 @@ ${notebook.text}`;
         encodedFileText +
         "&filename=" +
         filename;
-    //Open in a new tab
+    showModal.value = true;
+    //Open the link in a new tab
     window.open(githubQueryLink, "_blank");
+
 }
 </script>
 

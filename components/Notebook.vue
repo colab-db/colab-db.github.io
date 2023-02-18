@@ -143,14 +143,14 @@
                     ">
                                 {{ creator.name }}
                             </span>
-                            <NuxtLink :to="'https://github.com/' + creator.github" v-if="creator.github != undefined">
+                            <NuxtLink :to="'https://github.com/' + creator.github" v-if="checkIfEmpty(creator.github)">
                                 <Icon icon="ant-design:github-filled" class="text-gray-500 w-5 h-5" />
                             </NuxtLink>
                             <NuxtLink :to="'https://twitter.com/' + creator.twitter"
-                                v-if="creator.twitter != undefined">
+                                v-if="checkIfEmpty(creator.twitter)">
                                 <Icon icon="ant-design:twitter" class="text-blue-500 w-5 h-5" />
                             </NuxtLink>
-                            <NuxtLink :to="'https://orcid.org/' + creator.orcid" v-if="creator.orcid != undefined">
+                            <NuxtLink :to="'https://orcid.org/' + creator.orcid" v-if="checkIfEmpty(creator.orcid)">
                                 <Icon icon="academicons:orcid" class="text-green-500 w-5 h-5" />
                             </NuxtLink>
                         </div>
@@ -218,6 +218,17 @@
 import { Icon } from "@iconify/vue";
 import GithubButton from "vue-github-button";
 const props = defineProps(['post'])
+
+
+function checkIfEmpty(val) {
+    if (val == undefined || val == null) {
+        return false
+    } else if (val.length <= 1) {
+        return false
+    } else {
+        return true
+    }
+}
 
 function getBaseurl(url) {
     let u = new URL(url);

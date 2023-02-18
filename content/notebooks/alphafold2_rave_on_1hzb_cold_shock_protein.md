@@ -42,16 +42,15 @@ creator:
 ---
 # AlphaFold2-RAVE v 1.0
 
-## Demonstrative colab notebook can be found here -> [Complete run through on CSP system](https://colab.research.google.com/github/tiwarylab/alphafold2rave/blob/main/fullrunthrough_CSP.ipynb)
 This notebook aims to show how efficient our method is in predicting an effective RC (SPIB) from the amino acid sequence of a protein of interest(CSP), that can then be used in enhanced sampling to obtain Boltzmann ranked conformations.
 
-We provide a `light_version` option in our notebook to get a brief overview and the essence of our protocol. 
+We provide a `light_version` option in our notebook to get a brief overview and the essence of our protocol.
 
 | light_version  |   Time   | MD simulation  | SPIB |
 |----------------|:--------:|----------------|------|
 |      True      |  1  min  |       :x:      |   ✅ |
 |      False     |  ~ 3 hrs |        ✅      |   ✅ |
 
-
 ## Motivation
+
 This protocol is essentially a methodology that combines two schools of thought: structure prediction, and enhanced sampling to preserve thermodynamics. In this repository, we demonstrate one instance of such a methodology. For structure prediction, we use AlphaFold2, or more specifically ColabFold. We introduce stochasticity to the ColabFold algorithm by decreasing the MSA cluster size and generating structures with multiple random seeds<sup>\*</sup>. For thermodynamics, we perform molecular dynamics simulations with metadynamics. To bias the simulations, we learn collective variables from the now-diverse set of structures using SPIB<sup>\*</sup>.
