@@ -9,6 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Test changed-files
+    permissions:
+      id-token: write
+      contents: read
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v2
         with:
