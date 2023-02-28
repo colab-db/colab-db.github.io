@@ -1,5 +1,5 @@
 ---
-title: "CHARMM-GUI + OpenMM"
+title: "CHARMM-GUI+OpenMM"
 url: "https://colab.research.google.com/github/pablo-arantes/Making-it-rain/blob/main/CHARMM_GUI.ipynb"
 git: pablo-arantes/making-it-rain
 description: Using inputs from CHARMM-GUI solution builder and MD simulations with OpenMM
