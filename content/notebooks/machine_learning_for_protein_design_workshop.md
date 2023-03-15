@@ -1,7 +1,7 @@
 ---
 title: "Machine Learning for Protein Design Workshop"
 url: "https://colab.research.google.com/drive/1nH5Zjk2dGBfyZ9yYCIo_ly2sixzc-4IM?usp=sharing#scrollTo=Kzb-Ze-RezIp"
-git: https://github.com/igemto-drylab/CSBERG-ML
+git: igemto-drylab/CSBERG-ML
 description: A course with multiple chapters for beginners in protein ML. Covers Discriminative models, generative models, language models and structure based models.
 added: "2023-03-15"
 type: 
