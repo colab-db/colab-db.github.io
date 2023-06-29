@@ -3,8 +3,6 @@ title: "AfCycDesign"
 url: ""
 git: sokrypton/ColabDesign
 description: Cyclic peptide structure prediction and design using AlphaFold
-
-Stephen Rettie, Katelyn Campbell, Asim Bera, Alex Kang, Simon Kozlov, Joshmyn De La Cruz, Victor Adebomi, Guangfeng Zhou, Frank DiMaio, 
 added: "2023-06-28"
 type: 
  - colab
@@ -74,3 +72,7 @@ creator:
   orcid: 0000-0001-6554-2335
 
 ---
+
+## Cyclic peptide structure prediction and design using AlphaFold
+
+Stephen Rettie, Katelyn Campbell, Asim Bera, Alex Kang, Simon Kozlov, Joshmyn De La Cruz, Victor Adebomi, Guangfeng Zhou, Frank DiMaio, 

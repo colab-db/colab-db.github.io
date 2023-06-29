@@ -2,9 +2,7 @@
 title: "SMILES to properties"
 url: "https://colab.research.google.com/drive/1rTlkzvImvyPh_gz_W6y3ipFWFh_6MnIm#scrollTo=S3ctvC5678df"
 git: 
-description: Run property prediction on SMILES using chemprop, soltrannet, and SMILES2Caption. Most training data is from MoleculeNet.
-
-Either paste in one smiles in the input form, or create a dictionary of many 
+description: Run property prediction on SMILES using chemprop, soltrannet, and SMILES2Caption.
 added: "2023-06-28"
 type: 
  - colab
@@ -23,3 +21,7 @@ creator:
   orcid: 
 
 ---
+
+ Run property prediction on SMILES using chemprop, soltrannet, and SMILES2Caption. Most training data is from MoleculeNet.
+
+Either paste in one smiles in the input form, or create a dictionary of many 
